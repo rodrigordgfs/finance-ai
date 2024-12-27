@@ -15,8 +15,16 @@ import { z } from "zod";
 import { TransactionPaymentMethod, TransactionType } from "@prisma/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "../ui/form";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "../ui/form";
 import { Input } from "../ui/input";
+import MoneyInput from "../money-input";
 
 const formSchema = z.object({
   name: z.string().min(1, { message: "Nome é obrigatório" }),
@@ -74,7 +82,7 @@ const AddTransactionButton = () => {
               )}
             />
 
-<FormField
+            <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
@@ -90,9 +98,25 @@ const AddTransactionButton = () => {
               )}
             />
 
+            <FormField
+              control={form.control}
+              name="amount"
+              render={({ field }) => (
+                <FormItem>
+                  <FormItem>
+                    <FormLabel>Valor</FormLabel>
+                    <FormControl>
+                      <MoneyInput placeholder="Digite o valor" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                </FormItem>
+              )}
+            />
+
             <DialogFooter>
-                <Button variant="outline">Cancelar</Button>
-                <Button type="submit">Adicionar</Button>
+              <Button variant="outline">Cancelar</Button>
+              <Button type="submit">Adicionar</Button>
             </DialogFooter>
           </form>
         </Form>
